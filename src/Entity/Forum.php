@@ -80,12 +80,13 @@ class Forum
      * 
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private $created_at;
 
     public function __construct()
     {
         $this->threads = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $created_at = new \DateTime();
     }
 
     public function getId(): int

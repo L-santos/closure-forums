@@ -121,6 +121,7 @@ class User implements UserInterface, \Serializable
 
     public function __construct(){
         $this->roles[] = "ROLE_USER";
+        $created_at = new \DateTime();
     }
      
     public function getId(): int
@@ -128,12 +129,12 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    public function setUsername(User $username): void
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
-    public function getUsername(): User
+    public function getUsername(): string
     {
         return $this->username;
     }

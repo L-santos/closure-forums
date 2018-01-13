@@ -42,13 +42,6 @@ class Post
     private $content;
 
     /**
-     * @var \DateTime
-     * 
-     * ORM\Column(type="datetime")
-     */
-    private $created_at;
-
-    /**
      * @var Status
      * 
      * @ORM\ManyToOne(targetEntity="App\Entity\Status")   
@@ -62,6 +55,16 @@ class Post
      */
     private $reported = 0;
 
+    /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    public function __construct(){
+        $this->created_at = new \DateTime();
+    }
 
     public function getId(): int
     {

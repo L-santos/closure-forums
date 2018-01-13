@@ -35,8 +35,8 @@ class ForumController extends Controller
          * @TODO Manage the depth of the search looking only for forums without parent??
          * USE a paginator see [PAGER FANTA];;
          */
-        $root = $repo->find(0);
-        $forums = $root->getChildren();
+        //$root = $repo->find(0);
+        $forums = $repo->findAll();
         return $this->render('forum/index.html.twig', ["forums" => $forums]);
     }
 
