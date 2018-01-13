@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ForumRepository")
  * 
- * @author Lucas Santos <email@here>
+ * @author Lucas Santos <devlostpublisher@gmail.com>
  * 
  * @todo Forum permissions 
  * @see https://symfony.com/doc/current/security.html#security-role-hierarchy

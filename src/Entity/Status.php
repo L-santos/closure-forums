@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StatusRepository")
+ * @ORM\Entity()
  * 
- * @author Lucas Santos <email@here>
+ * @author Lucas Santos <devlostpublisher@gmail.com>
  */
 class Status
 {

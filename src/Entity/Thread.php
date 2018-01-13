@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
  * 
- * @author Lucas Santos <email@here>
+ * @author Lucas Santos <devlostpublisher@gmail.com>
  */
 class Thread
 {
