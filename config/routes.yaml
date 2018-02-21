@@ -1,3 +1,6 @@
 #index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\ForumController::index
+
+logout:
+  path: /forums/logout

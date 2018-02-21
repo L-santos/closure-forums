@@ -1,0 +1,63 @@
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <th>{{ thread.subject }}</th>
+        {% if is_granted('ROLE_MODERATOR') %}
+        <th>
+            <a href="http://">
+                <i class="fas fa-pencil-alt fa-lg" title="edit post"></i>                    
+            </a>
+            <a href="http://">
+                <i class="fas fa-trash-alt fa-lg" title="delete post"></i>                    
+            </a>
+            <a href="http://">
+                <i class="fas fa-lock fa-lg" title="close post"></i>                    
+            </a>
+        </th>
+        {% endif %}
+    </thead>
+    <tbody>
+        {% for post in thread.posts %}
+            <tr>
+                <td>
+                    <small>{{ post.user.username }} {{ post.createdat | date() }}</small>
+                    <p id="post_{{ post.id }}">{{post.content}}</p>
+                    {% if is_granted('ROLE_USER') %}
+                        <a id="{{ post.id }}" class="btn btn-sm btn-secondary" href="#"
+                            onclick="reply(this)"
+                        >reply</a>
+                        {%if (app.user and app.user.username == post.user.username) or is_granted('ROLE_MODERATOR') %}
+                            <a class="btn btn-sm btn-secondary" href="#">edit</a>
+                            <a href="{{ path('post_delete', { id : post.id }) }}" class="btn btn-sm btn-secondary">remove</a>                            
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+            {% if is_granted('ROLE_USER') %}
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.content) }}
+                    {{ form_errors(form.content) }}
+                    {{ form_widget(form.content, { 'attr': {'class': 'form-control' }}) }}
+                </div>
+                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-secondary' }}) }}
+                {{ form_end(form) }}
+            {% else %}
+                <a href="{{ path('login') }}">Login</a> to post a new reply
+            {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% block javascripts %}
+    <script>
+        function reply(e){
+            post = document.getElementById('post_'+e.id);
+            console.log('post_'+e.id)
+            post_content = document.getElementById('post_content');
+            post_content.textContent = post.textContent;
+        }
+    </script>
+{% endblock %}

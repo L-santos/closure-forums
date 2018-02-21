@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Patrick+Hand" rel="stylesheet"> 
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="https://github.com/l-santos/closure-forums" target="_blank">Closure-forums</a>
+    </nav>
+    <p></p>
+    <div class="container">
+        <div>
+            <h4>Install Instructions:</h4>
+            <ol>
+                <li>Run composer update</li>
+                <li>Create the database </li>
+                <li>Update .env file with the database and environment information</li>
+                <li> run php bin/console closure:install and follow the instructions</li>
+            </ol>
+        </div>
+        <a href="/forums" class="btn btn-secondary">Go to Forum</a>
+
+        <hr>
+        <div>
+            <ul>
+                Default Users:
+                <li>admin: 'your password' </li>
+                <li>user: 123456</li>
+                <li>mod: 123456</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

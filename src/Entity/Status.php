@@ -14,8 +14,6 @@ class Status
 
     const APPROVED = 1;
     const PENDING = 2;
-    const BLOCKED = 3;
-
     
     /**
      * @var int
@@ -28,7 +26,7 @@ class Status
     /**
      * @var string
      * 
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $value;
 

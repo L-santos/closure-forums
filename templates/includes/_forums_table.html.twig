@@ -1,0 +1,41 @@
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <th>Forum</th>
+        <th>Threads</th>
+        <th>Last Update</th>
+    </thead>
+    <tbody>
+        {% for forum in forums %}
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 col-12">
+                        <a href="{{ path( 'forum_show', {slug: forum.slug } ) }}"><h5>{{ forum.name }}</h5></a>
+                        {{ forum.description }} 
+                    </div>
+                    {%if is_granted('ROLE_MODERATOR') %}
+                        <div class="col-md-6 col-lg-8 col-6">
+                            <a href="{{ path('forum_settings', { slug: forum.slug }) }}">
+                                <i class="fas fa-cog fa-lg" title="forum settings"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </td>
+            <td>{{ forum.threads | length }}</td>
+            <td>
+                {% if forum.lastThread %}
+                <a href="{{ path('thread_show', {slug: forum.slug, id: forum.lastThread.id})}}">
+                    {{ forum.lastThread.subject | default }}
+                </a> 
+                <br>
+                by 
+                <a href="{{ path('user_show', {id: forum.lastThread.user.id}) | default }}">
+                    {{ forum.lastThread.lastPost.user.username | default  }}
+                </a> {{ forum.lastThread.lastPost.createdAt | date }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

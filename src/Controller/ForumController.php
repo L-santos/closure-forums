@@ -6,70 +6,81 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Thread;
-use App\Entity\Status;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Form\ForumType;
 use App\Entity\Forum;
-use App\Entity\Post;
-use App\Entity\User;
 
 /**
- * @Route("/forum")
+ * @Route("/forums", name="forum")
  * 
  * @author Lucas Santos <devlostpublisher@gmail.com>
+ * 
+ * @todo Decide if the forum should have a forum_root or create a new entity to manage the settings
+ * 
  */
 class ForumController extends Controller
 {
     /**
-     * @Route("/forums", name="list")
-     * @Route("/", name="index")
+     * @Route("/")
+     * @Route("/forum", name="_list")
      * @Method("GET")
      */
-    public function index() : Response
+    public function list()
     {
-        //Show the categories
         $repo = $this->getDoctrine()->getRepository(Forum::class);
 
-        /**
-         * @TODO Manage the depth of the search looking only for forums without parent??
-         * USE a paginator see [PAGER FANTA];;
-         */
-        //$root = $repo->find(0);
         $forums = $repo->findAll();
+
         return $this->render('forum/index.html.twig', ["forums" => $forums]);
     }
 
     /**
-     * @Route("/forums/{slug}", name="forum", requirements={"page"="\+d"})
+     * @Route("/forum/{slug}", name="_show", requirements={"page"="\+d"})
      */
-     public function forumShow(Forum $forum): Response
+     public function show(Forum $forum)
      {
+         /**
+          * @todo Use paginator [? /PAGER FANTA ??]
+          */
+
          $threads = $forum->getThreads();
-         return $this->render('forum/forum_show.html.twig', ["forum" => $forum, "threads" => $threads]);
+         return $this->render('forum/forum.html.twig', ["slug" => $forum->getSlug(), "threads" => $threads]);
      }
 
      /**
-      * @Route("/forums/{slug}/create-thread", name="thread_create")
+      * @Route("/forum/{slug}/settings", name="_settings")
       */
-     public function createThread(Forum $forum){
+      public function settings(Forum $forum){
+          return new Response();
+      }
 
-        //TODO: Create and render form, validate and submit
+    /**
+     * @Route("/create/forum", name="_create")
+     */
+    public function create(Request $request){
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to create forums');
 
-        return $this->render('forum/_thread_form.html.twig');
-     }
+        $forum = new Forum();
 
-     /**
-      * @Route("/forums/{slug}/thread={id}", name="thread")
-      */
-     public function threadShow(Thread $thread): Response
-     {
-        return $this->render("forum/thread_show.html.twig", ["thread" => $thread]);
-     }
+        $form = $this->createForm(ForumType::class, $forum);
 
-     /**
-      * TODO
-      * Reply thread
-      * Quote Reply
-      */
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $forum->setCreatedAt(new \DateTime());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($forum);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_dashboard', ['slug' => 'test']);
+        }
+        
+        return $this->render('admin/forum_create.html.twig', ['form' => $form->createView()]);
+    }
 }

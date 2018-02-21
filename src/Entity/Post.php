@@ -24,6 +24,7 @@ class Post
      * @var User
      * 
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
 
@@ -31,6 +32,7 @@ class Post
      * @var Thread
      * 
      * @ORM\ManyToOne(targetEntity="App\Entity\Thread", inversedBy="posts")
+     * @ORM\JoinColumn(name="thread_id", referencedColumnName="id", nullable=false)
      */
     private $thread;
 
@@ -91,7 +93,7 @@ class Post
         return $this->thread;
     }
 
-    public function setContent(string $content): string
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }

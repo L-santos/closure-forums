@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+{{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name, { 'attr': { 'class': 'form-control' }}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.slug) }}
+        {{ form_errors(form.slug) }}
+        {{ form_widget(form.slug, { 'attr': { 'class': 'form-control' }}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description, { 'attr': { 'class': 'form-control' }}) }}
+    </div>
+    <div class="form-check">
+        {{ form_errors(form.published) }}
+        {{ form_widget(form.published, { 'attr': { 'class': 'form-check-input' }}) }} 
+        {{ form_label(form.published) }}
+    </div>
+    {{ form_widget(form.submit, { 'attr': { 'class' : 'btn btn-secondary' }}) }}
+    <div class="alert-danger" role="alert">
+        {{ form_errors(form) }}
+    </div>
+{{ form_end(form) }}
+
+{% endblock %}

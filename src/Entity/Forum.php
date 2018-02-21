@@ -28,14 +28,14 @@ class Forum
     /**
      * @var string
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      */
     private $name;
 
     /**
      * @var string
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $slug;
 
@@ -82,11 +82,27 @@ class Forum
      */
     private $created_at;
 
+    /** 
+    * @var bool
+    *
+    * @ORM\Column(type="boolean")
+    */
+    private $published = true; 
+
     public function __construct()
     {
         $this->threads = new ArrayCollection();
         $this->children = new ArrayCollection();
         $created_at = new \DateTime();
+    }
+
+    public function getParents(){
+        $temp = [];
+        while($this->parent){
+            $temp[] = $this->parent->slug;
+        }
+
+        return $temp;
     }
 
     public function getId(): int
@@ -99,7 +115,7 @@ class Forum
         $this->name = $name;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;        
     }
@@ -109,7 +125,7 @@ class Forum
         $this->slug = $slug;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -129,7 +145,7 @@ class Forum
         return $this->last_thread;
     }
 
-    public function setDescription(string $description): string
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -162,5 +178,15 @@ class Forum
     public function getChildren(): ?Collection
     {
         return $this->children;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $value): void
+    {
+        $this->published = $value;
     }
 }

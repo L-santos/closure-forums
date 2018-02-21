@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<a href="{{ path('thread_create', {slug: slug }) }}">New Thread</a>
+{% include '/includes/_forum_table.html.twig' %}
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<table class="table table-sm">
+    <thead class="thead-dark">
+        {% if threads | length %}
+        <th>Threads in {{ threads[0].forum.name }}</th>
+        {% else %}
+        <th>Threads</th>
+        {% endif %}
+        <th>Posts</th>
+        <th>Start date</th>
+        <th>Last Post</th>
+        {% if is_granted('ROLE_MODERATOR') %}
+        <th>Actions</th>
+        {% endif %}
+        <th></th>
+    </thead>
+    <tbody>
+    {% for thread in threads %}
+        <tr>
+            <td><a href="{{ path('thread_show', {slug: thread.forum.slug, id: thread.id}) }}">{{ thread.subject }}</a> by: {{ thread.user.username }}</td>
+            <td>{{ thread.posts.count() }}</td>
+            <td>{{ thread.createdat | date() }}</td>
+            <td>                        
+                <a href="{{ path('user_show', {id: thread.lastPost.user.id}) }}">
+                    {{ thread.lastPost.user.username | default  }}
+                </a> {{ thread.lastPost.createdAt | date }}</td>
+            {% if is_granted('ROLE_MODERATOR') %}
+                <td>
+                    <a href="http://">
+                        <i class="fas fa-pencil-alt fa-lg" title="edit post"></i>                    
+                    </a>
+                    <a href="http://">
+                        <i class="fas fa-trash-alt fa-lg" title="delete post"></i>                    
+                    </a>
+                    <a href="http://">
+                        <i class="fas fa-lock fa-lg" alt="close"></i>                    
+                    </a>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

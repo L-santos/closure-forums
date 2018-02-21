@@ -1,14 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %} Closure Forums {% endblock %}
 {% block body %}
-<ul>
-    <h2>Forums</h2>    
-    {% for forum in forums %}
-        <li>
-            <a href="{{ path('forum', {slug: forum.slug } ) }}">
-                {{forum.name}}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+    <div class="forums">          
+        {% include 'includes/_forums_table.html.twig' %}
+    </div>
 {% endblock %}

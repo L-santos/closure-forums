@@ -6,6 +6,9 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * @author Lucas Santos <devlostpublisher@gmail.com>
+ */
 class UserRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)

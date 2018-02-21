@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h4>Delete Post?</h4>
+<div class="text-center alert-primary" role="alert">
+    <small>{{ post.user.username }} - {{ post.createdAt | date }}</small>
+    <p>{{ post.content }}</p>
+<form action="{{ path('post_delete', {id: post.id}) }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <input class="btn btn-danger" value="Delete" type="submit">
+    <a href="{{ app.request.getPathInfo }}" class="btn btn-primary">Cancel</a>
+</form>
+</div>
+{% endblock %}

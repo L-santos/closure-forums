@@ -14,6 +14,7 @@ class UserStatus
 
     const ACTIVE = 1;
     const INACTIVE = 2;
+    const BLOCKED = 3;
 
     /**
      * @var int

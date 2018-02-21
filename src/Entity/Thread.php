@@ -159,10 +159,10 @@ class Thread
 
     public function setLastPost(Post $last_post): void
     {
-        $this->last_post_time = $last_post_time;
+        $this->last_post = $last_post;
     }
 
-    public function getLastPost(): Post
+    public function getLastPost(): ?Post
     {
         return $this->last_post;
     }
